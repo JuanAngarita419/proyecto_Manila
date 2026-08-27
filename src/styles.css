@@ -23,13 +23,149 @@
   --fuente-titulos: 'Poppins', 'Segoe UI', Arial, sans-serif;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   height: 100%;
+  width: 100%;
   margin: 0;
+  padding: 0;
   background-color: var(--color-fondo);
   font-family: 'Segoe UI', Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+app-root {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Garantizar que los contenedores principales sean responsive */
+[class*="container"],
+[class*="wrapper"],
+[class*="content"] {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Estilos responsive para diferentes tamaños */
+@media (max-width: 1200px) {
+  [class*="container"],
+  [class*="wrapper"],
+  [class*="content"] {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  [class*="container"],
+  [class*="wrapper"],
+  [class*="content"] {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 13px;
+  }
+
+  [class*="container"],
+  [class*="wrapper"],
+  [class*="content"] {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  /* Asegurar que los elementos no se salgan de la pantalla */
+  main {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  nav {
+    width: 100%;
+  }
+
+  header {
+    width: 100%;
+  }
+
+  footer {
+    width: 100%;
+  }
+}
+
+/* Prevenir scroll horizontal */
+body,
+html {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Reset de inputs y formularios */
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Prevenir zoom en inputs en móvil */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  input[type="password"],
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+/* Estilos de imagen responsive */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Tabla responsive */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Asegurar que los flex containers sean responsive */
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .flex {
+    flex-direction: column;
+  }
 }

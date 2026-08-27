@@ -251,3 +251,134 @@
   50% { transform: scale(1.05); }
   100% { opacity: 1; transform: scale(1) translateY(0); }
 }
+
+/* Media queries para responsividad en móviles */
+@media (max-width: 768px) {
+  .contenedor-juego {
+    padding: 15px;
+    background: #0f0f0f;
+  }
+
+  .titulo-juego h1 {
+    font-size: 1.8rem;
+    text-shadow: 2px 2px 0px #ff6b6b, 4px 4px 0px #ffd93d;
+  }
+
+  .subtitulo {
+    font-size: 0.9rem;
+  }
+
+  .leyenda {
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.85rem;
+  }
+
+  .separador {
+    display: none;
+  }
+
+  /* Tablero del juego en móvil */
+  .tablero-juego {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 100%;
+    margin: 0 auto 30px;
+    padding: 15px;
+  }
+
+  /* Tarjeta en móvil */
+  .tarjeta {
+    border: 2px solid #ffd93d;
+    border-radius: 15px;
+  }
+
+  .tarjeta:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(255, 107, 107, 0.4);
+  }
+
+  /* Signo de interrogación en móvil */
+  .signo-pregunta {
+    font-size: 2rem;
+  }
+
+  /* Mensaje de victoria en móvil */
+  .letrero {
+    font-size: 2rem;
+    text-shadow: 2px 2px 0px #ff6b6b, 4px 4px 0px #ffd93d;
+  }
+
+  .confetti {
+    gap: 5px;
+    margin: 20px 0;
+  }
+
+  .confetti-item {
+    font-size: 1.5rem;
+  }
+
+  /* Botón en móvil */
+  .boton-reiniciar {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contenedor-juego {
+    padding: 10px;
+  }
+
+  .titulo-juego {
+    margin-bottom: 15px;
+  }
+
+  .titulo-juego h1 {
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 0px #ff6b6b, 2px 2px 0px #ffd93d;
+    letter-spacing: 1px;
+  }
+
+  .subtitulo {
+    font-size: 0.8rem;
+    margin-top: 5px;
+  }
+
+  .leyenda {
+    font-size: 0.75rem;
+    margin-top: 8px;
+  }
+
+  /* Tablero en pantallas muy pequeñas */
+  .tablero-juego {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 12px;
+    margin: 0 auto 20px;
+  }
+
+  /* Tarjeta en pantallas muy pequeñas */
+  .tarjeta {
+    border: 2px solid #ffd93d;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .signo-pregunta {
+    font-size: 1.5rem;
+  }
+
+  .letrero {
+    font-size: 1.5rem;
+  }
+
+  .confetti-item {
+    font-size: 1rem;
+  }
+
+  .boton-reiniciar {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
