@@ -1,4 +1,5 @@
 import { Component, OnInit, signal, HostListener } from '@angular/core';
+import { Observable } from 'rxjs';
 import { servicioCarrito } from '../servicios/servicios-carrito';
 import { servicioBebida } from '../servicios/servicios-bebida';
 import { CommonModule } from '@angular/common';
@@ -44,28 +45,15 @@ export class Bebidas implements OnInit {
 
   // le pone un precio random a cada bebida, entre 10.000 y 45.000
   ponerPrecios(lista: BebidaEntidad[]): BebidaEntidad[] {
-    lista.forEach((bebida) => {
-      bebida.precio = Math.floor(Math.random() * (45000 - 10000 + 1)) + 10000;
-    });
-    return lista;
+    return lista.map((bebida) => ({
+      ...bebida,
+      precio: Math.floor(Math.random() * (45000 - 10000 + 1)) + 10000,
+    }));
   }
 
   // trae todas las bebidas (letra por letra) al entrar a la página
   buscarTodo() {
-    this.cargando.set(true);
-    this.hayError.set(false);
-
-    this.servicioBebida.traerTodasLasBebidas().subscribe({
-      next: (dato: any) => {
-        const lista: BebidaEntidad[] = dato.drinks ?? [];
-        this.bebidas.set(this.ponerPrecios(lista));
-        this.cargando.set(false);
-      },
-      error: () => {
-        this.hayError.set(true);
-        this.cargando.set(false);
-      },
-    });
+    this.cargarResultados(this.servicioBebida.traerTodasLasBebidas());
   }
 
   // decide qué buscar según el filtro que el usuario eligió
@@ -89,35 +77,25 @@ export class Bebidas implements OnInit {
       return;
     }
 
-    this.cargando.set(true);
-    this.hayError.set(false);
-
     const peticion =
       this.filtro === 'ingrediente'
         ? this.servicioBebida.buscarPorIngrediente(texto)
         : this.servicioBebida.buscarPorNombre(texto);
 
-    peticion.subscribe({
-      next: (dato: any) => {
-        const lista: BebidaEntidad[] = dato.drinks ?? [];
-        this.bebidas.set(this.ponerPrecios(lista));
-        this.cargando.set(false);
-      },
-      error: () => {
-        this.hayError.set(true);
-        this.cargando.set(false);
-      },
-    });
+    this.cargarResultados(peticion);
   }
 
   buscarPorTipo(tipo: string) {
+    this.cargarResultados(this.servicioBebida.buscarPorTipo(tipo));
+  }
+
+  private cargarResultados(peticion: Observable<any>): void {
     this.cargando.set(true);
     this.hayError.set(false);
 
-    this.servicioBebida.buscarPorTipo(tipo).subscribe({
+    peticion.subscribe({
       next: (dato: any) => {
-        const lista: BebidaEntidad[] = dato.drinks ?? [];
-        this.bebidas.set(this.ponerPrecios(lista));
+        this.bebidas.set(this.ponerPrecios(dato.drinks ?? []));
         this.cargando.set(false);
       },
       error: () => {

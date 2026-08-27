@@ -1,2 +1,37 @@
-<h2>Proximamente disponible</h2>
+<div class="contenedor-juego">
+  <div class="titulo-juego">
+    <h1>🎮 BUSCA TU COMBO 🎮</h1>
+    <p class="subtitulo">Encuentra el plato 🍽️ y su bebida 🥤 perfecta</p>
+    <div class="leyenda">
+      <span>🍽️ Busca el plato</span>
+      <span class="separador">|</span>
+      <span>🥤 Busca la bebida</span>
+    </div>
+  </div>
 
+  <div class="tablero-juego">
+    @for (i of casillas; track i) {
+      <button class="tarjeta" (click)="descubrirO(i)" [id]="'tablero' + i">
+        <span class="signo-pregunta">❓</span>
+        <img [id]="'img' + i" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Crect fill='%23ffffff' width='1' height='1'/%3E%3C/svg%3E" class="imagen-oculta" alt="" />
+      </button>
+    }
+  </div>
+
+  @if (letrero) {
+    <div class="contenedor-victoria">
+      <div class="letrero">{{ letrero }}</div>
+      <div class="confetti">
+        <span class="confetti-item">🎉</span>
+        <span class="confetti-item">🌮</span>
+        <span class="confetti-item">🍹</span>
+        <span class="confetti-item">✨</span>
+        <span class="confetti-item">🎊</span>
+        <span class="confetti-item">🍴</span>
+        <span class="confetti-item">🤤</span>
+        <span class="confetti-item">💫</span>
+      </div>
+      <button class="boton-reiniciar" type="button" (click)="reiniciar()">🔄 JUGAR DE NUEVO</button>
+    </div>
+  }
+</div>

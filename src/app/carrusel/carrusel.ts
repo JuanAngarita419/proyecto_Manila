@@ -19,7 +19,7 @@ export class Carrusel implements OnInit, OnDestroy {
   @ViewChild('pista') pista!: ElementRef<HTMLDivElement>;
 
   // guarda el intervalo del auto-scroll para poder detenerlo después
-  intervalo: any;
+  intervalo?: number;
 
   platos: PlatoTipico[] = [
     {
@@ -53,7 +53,9 @@ export class Carrusel implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // apagamos el intervalo para que no siga corriendo cuando salimos de la página
-    clearInterval(this.intervalo);
+    if (this.intervalo) {
+      window.clearInterval(this.intervalo);
+    }
   }
 
   // busca en la API la imagen real de cada plato típico, por su nombre
@@ -74,7 +76,7 @@ export class Carrusel implements OnInit, OnDestroy {
 
   // hace que el carrusel avance solo cada 4 segundos
   iniciarAutoScroll() {
-    this.intervalo = setInterval(() => {
+    this.intervalo = window.setInterval(() => {
       const contenedor = this.pista.nativeElement;
       const llegoAlFinal =
         contenedor.scrollLeft + contenedor.clientWidth >= contenedor.scrollWidth - 5;

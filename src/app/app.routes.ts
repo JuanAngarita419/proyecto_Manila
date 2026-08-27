@@ -10,8 +10,8 @@ export const routes: Routes = [
     { path: 'comida', component: Comida },
     { path: 'bebidas', component: Bebidas },
     { path: 'juego', component: Juego },
-    {path: 'carrusel', component: Carrusel},
-    {path: 'logo', component: Logo},
-    {path: 'carrito', component: Carrito},
-    { path: '**', redirectTo: '' }
+    { path: 'carrusel', component: Carrusel },
+    { path: 'logo', component: Logo },
+    { path: 'carrito', component: Carrito },
+    { path: '**', redirectTo: '' },
 ];

@@ -1,6 +1,7 @@
 import { Component, OnInit, signal, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { serviciosComida } from '../servicios/servicios-comida';
 import { servicioCarrito } from '../servicios/servicios-carrito';
 import { Comida as ComidaEntidad } from '../entidades/entidad-comida';
@@ -46,33 +47,19 @@ export class Comida implements OnInit {
 
   // pone un precio random a cada plato, entre 10.000 y 45.000
   ponerPrecios(lista: ComidaEntidad[]): ComidaEntidad[] {
-    lista.forEach((plato) => {
-      plato.precio = Math.floor(Math.random() * (45000 - 10000 + 1)) + 10000;
-    });
-    return lista;
+    return lista.map((plato) => ({
+      ...plato,
+      precio: Math.floor(Math.random() * (45000 - 10000 + 1)) + 10000,
+    }));
   }
 
   // trae todas las comidas (letra por letra) o busca por nombre si le paso texto
   buscarTodo(texto: string = '') {
-    this.cargando.set(true);
-    this.hayError.set(false);
-
     const peticion = texto
       ? this.serviciosComida.recibirDatosC(texto)
       : this.serviciosComida.traerTodasLasComidas();
 
-    peticion.subscribe({
-      next: (dato: any) => {
-        const lista: ComidaEntidad[] = dato.meals ?? [];
-        this.comidas.set(this.ponerPrecios(lista));
-        this.cargando.set(false);
-      },
-      error: (err) => {
-        console.error('error API:', err);
-        this.hayError.set(true);
-        this.cargando.set(false);
-      },
-    });
+    this.cargarResultados(peticion);
   }
 
   buscar() {
@@ -88,18 +75,20 @@ export class Comida implements OnInit {
       return;
     }
 
-    // buscar por ingrediente
+    this.cargarResultados(this.serviciosComida.buscarPorIngrediente(texto));
+  }
+
+  private cargarResultados(peticion: Observable<any>): void {
     this.cargando.set(true);
     this.hayError.set(false);
 
-    this.serviciosComida.buscarPorIngrediente(texto).subscribe({
+    peticion.subscribe({
       next: (dato: any) => {
-        const lista: ComidaEntidad[] = dato.meals ?? [];
-        this.comidas.set(this.ponerPrecios(lista));
+        this.comidas.set(this.ponerPrecios(dato.meals ?? []));
         this.cargando.set(false);
       },
-      error: (err) => {
-        console.error('error API:', err);
+      error: (error) => {
+        console.error('error API:', error);
         this.hayError.set(true);
         this.cargando.set(false);
       },
