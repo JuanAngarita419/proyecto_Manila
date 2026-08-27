@@ -1,0 +1,76 @@
+<div class="encabezado">
+  <h1 class="titulo-pagina">Tu Carrito</h1>
+</div>
+
+<div class="contenido-carrito">
+
+  <p *ngIf="servicioCarrito.productos().length === 0" class="estado-mensaje">
+    Tu carrito está vacío. Agrega platos o bebidas desde sus secciones.
+  </p>
+
+  <div class="envoltorio-carrito" *ngIf="servicioCarrito.productos().length > 0">
+
+  <div class="lista-carrito">
+
+    <div class="item-carrito" *ngFor="let item of servicioCarrito.productos()">
+
+      <img class="imagen-item" [src]="item.imagen" [alt]="item.nombre" />
+
+      <div class="info-item">
+        <h3 class="nombre-item">{{ item.nombre }}</h3>
+        <p class="tipo-item">{{ item.tipo === 'comida' ? 'Comida' : 'Bebida' }}</p>
+        <p class="precio-item">${{ item.precio | number }} c/u</p>
+      </div>
+
+      <div class="controles-cantidad">
+        <button class="boton-cantidad" (click)="disminuir(item)">-</button>
+        <span class="cantidad">{{ item.cantidad }}</span>
+        <button class="boton-cantidad" (click)="aumentar(item)">+</button>
+      </div>
+
+      <p class="subtotal-item">${{ item.precio * item.cantidad | number }}</p>
+
+      <button class="boton-eliminar" (click)="eliminar(item)">✕</button>
+
+    </div>
+
+  </div>
+
+  <div class="resumen-carrito">
+
+    <p class="total-carrito">Total: ${{ servicioCarrito.total() | number }}</p>
+
+    <h3 class="subtitulo-form">Datos para el pedido</h3>
+
+    <input
+      type="text"
+      class="campo-form"
+      placeholder="Nombre completo"
+      [(ngModel)]="datosCliente.nombre"
+    />
+
+    <input
+      type="text"
+      class="campo-form"
+      placeholder="Celular"
+      [(ngModel)]="datosCliente.celular"
+    />
+
+    <input
+      type="text"
+      class="campo-form"
+      placeholder="Dirección"
+      [(ngModel)]="datosCliente.direccion"
+    />
+
+    <p *ngIf="mensajeError()" class="mensaje-error">{{ mensajeError() }}</p>
+
+    <button class="boton-pedido" (click)="realizarPedido()">
+      Realizar pedido
+    </button>
+
+  </div>
+
+  </div>
+
+</div>

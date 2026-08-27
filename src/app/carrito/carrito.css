@@ -1,0 +1,234 @@
+.encabezado {
+  background-color: var(--color-fondo);
+  padding: 36px 60px;
+  margin: 14px 0 18px;
+  border-left: 5px solid var(--color-acento-principal);
+}
+
+.titulo-pagina {
+  color: var(--color-texto-claro);
+  font-family: var(--fuente-titulos);
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.contenido-carrito {
+  padding: 30px 60px 60px;
+  background-color: var(--color-fondo);
+}
+
+.estado-mensaje {
+  color: var(--color-texto-apagado);
+  font-size: 16px;
+  text-align: center;
+  padding: 60px 0;
+}
+
+/* --- layout de 2 columnas: lista a la izquierda, resumen fijo a la derecha --- */
+.envoltorio-carrito {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.lista-carrito {
+  flex: 2;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* --- cada producto: sin bordes pesados, solo una línea sutil abajo --- */
+.item-carrito {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  background-color: var(--color-superficie);
+  border-radius: 10px;
+}
+
+.imagen-item {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.info-item {
+  flex: 1;
+  min-width: 120px;
+}
+
+.nombre-item {
+  color: var(--color-texto-claro);
+  font-family: var(--fuente-titulos);
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 3px;
+}
+
+.tipo-item {
+  color: var(--color-acento-secundario);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 3px;
+}
+
+.precio-item {
+  color: var(--color-texto-apagado);
+  font-size: 13px;
+  margin: 0;
+}
+
+.controles-cantidad {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.boton-cantidad {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: transparent;
+  color: var(--color-texto-claro);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.boton-cantidad:hover {
+  border-color: var(--color-acento-secundario);
+  color: var(--color-acento-secundario);
+}
+
+.cantidad {
+  color: var(--color-texto-claro);
+  font-size: 14px;
+  min-width: 16px;
+  text-align: center;
+}
+
+.subtotal-item {
+  color: var(--color-texto-claro);
+  font-size: 15px;
+  font-weight: 700;
+  min-width: 85px;
+  text-align: right;
+}
+
+.boton-eliminar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background-color: transparent;
+  color: var(--color-texto-apagado);
+  font-size: 13px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.boton-eliminar:hover {
+  color: var(--color-acento-principal);
+}
+
+/* --- resumen: la única tarjeta con borde marcado, para que resalte --- */
+.resumen-carrito {
+  flex: 1;
+  min-width: 280px;
+  position: sticky;
+  top: 20px;
+  background-color: var(--color-superficie);
+  border-radius: 14px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.total-carrito {
+  color: var(--color-texto-claro);
+  font-size: 24px;
+  font-weight: 800;
+  margin: 0 0 4px;
+}
+
+.subtitulo-form {
+  color: var(--color-texto-apagado);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-weight: 600;
+  margin: 6px 0 0;
+}
+
+.campo-form {
+  background-color: var(--color-fondo);
+  color: var(--color-texto-claro);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-size: 14px;
+  transition: border-color 0.15s ease;
+}
+
+.campo-form:focus {
+  outline: none;
+  border-color: var(--color-acento-secundario);
+}
+
+.campo-form::placeholder {
+  color: var(--color-texto-apagado);
+}
+
+.mensaje-error {
+  color: var(--color-acento-principal);
+  font-size: 13px;
+  margin: 0;
+}
+
+.boton-pedido {
+  margin-top: 4px;
+  background-color: var(--color-acento-principal);
+  color: var(--color-fondo);
+  border: none;
+  border-radius: 8px;
+  padding: 13px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.boton-pedido:hover {
+  filter: brightness(1.1);
+}
+
+@media (max-width: 900px) {
+  .contenido-carrito {
+    padding: 0 20px 40px;
+  }
+
+  .envoltorio-carrito {
+    flex-direction: column;
+  }
+
+  .resumen-carrito {
+    position: static;
+    width: 100%;
+  }
+
+  .item-carrito {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand-manila" routerLink="/">
+      <app-logo tamano="md"></app-logo>
+    </a>
+    <div class="collapse navbar-collapse" id="mynavbar">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/comida" routerLinkActive="active">Comida</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/bebidas" routerLinkActive="active">Bebidas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/carrito" routerLinkActive="active">Carrito</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/juego" routerLinkActive="active">Juego</a>
+        </li>
+      </ul>
+    </div>
+</nav>

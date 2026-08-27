@@ -1,0 +1,70 @@
+.logo-manila {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.logo-manila__marca {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  overflow: visible;
+}
+
+.logo-manila__fondo {
+  fill: var(--color-acento-principal);
+}
+
+.logo-manila__tazon {
+  fill: var(--color-fondo);
+  opacity: 0.95;
+}
+
+.logo-manila__linea {
+  stroke: var(--color-fondo);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.logo-manila__texto {
+  position: relative;
+  display: inline-block;
+  font-family: var(--fuente-titulos);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  font-size: 1.3rem;
+  color: var(--color-texto-claro);
+  white-space: nowrap;
+  padding-bottom: 4px;
+}
+
+.logo-manila__subrayado {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 60%;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--color-acento-principal);
+}
+
+/* Tamaños */
+.logo-manila--sm .logo-manila__marca {
+  width: 30px;
+  height: 30px;
+}
+
+.logo-manila--sm .logo-manila__texto {
+  font-size: 1.05rem;
+}
+
+.logo-manila--lg .logo-manila__marca {
+  width: 52px;
+  height: 52px;
+}
+
+.logo-manila--lg .logo-manila__texto {
+  font-size: 1.75rem;
+}

@@ -1,0 +1,41 @@
+<div class="contenedor">
+
+  <div class="encabezado-inicio">
+    <h1 class="titulo">Comida para satisfacer tanto la barriga como el bolsillo :D.</h1>
+  </div>
+
+  <div class="destacados">
+
+    <div class="tarjeta">
+      <p class="tarjeta-titulo">Comida Popular</p>
+
+      <img
+        *ngIf="comidaPopular()"
+        class="imagen-tarjeta"
+        [src]="comidaPopular().strMealThumb"
+        [alt]="comidaPopular().strMeal"
+      />
+
+      <p *ngIf="comidaPopular()" class="nombre-tarjeta">
+        {{ comidaPopular().strMeal }}
+      </p>
+    </div>
+
+    <div class="tarjeta">
+      <p class="tarjeta-titulo">Bebida Popular</p>
+
+      <img
+        *ngIf="bebidaPopular()"
+        class="imagen-tarjeta"
+        [src]="bebidaPopular().strDrinkThumb"
+        [alt]="bebidaPopular().strDrink"
+      />
+
+      <p *ngIf="bebidaPopular()" class="nombre-tarjeta">
+        {{ bebidaPopular().strDrink }}
+      </p>
+    </div>
+
+  </div>
+
+</div>

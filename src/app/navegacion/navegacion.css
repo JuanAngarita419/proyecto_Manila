@@ -1,0 +1,35 @@
+::ng-deep .navbar.bg-dark {
+    background-color: var(--color-fondo) !important;
+    border-bottom: 3px solid var(--color-acento-principal);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 24px;
+}
+
+.navbar-brand-manila {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+::ng-deep .navbar-collapse {
+    display: flex;
+    flex: 1;
+    width: 100%;
+}
+
+::ng-deep .navbar .nav-link {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: color 0.15s ease;
+}
+
+::ng-deep .navbar .nav-link:hover {
+    color: var(--color-acento-amarillo) !important;
+}
+
+::ng-deep .navbar .nav-link.active {
+    color: var(--color-acento-turquesa) !important;
+}

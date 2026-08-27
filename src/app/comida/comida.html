@@ -1,0 +1,146 @@
+<div class="encabezado">
+
+  <h1 class="titulo-pagina">Comidas</h1>
+
+  <div class="barra-busqueda">
+
+    <select class="filtro" [(ngModel)]="filtro">
+      <option value="nombre">Buscar por nombre</option>
+      <option value="ingrediente">Buscar por ingrediente</option>
+    </select>
+
+    <input
+      type="text"
+      class="campo-texto"
+      placeholder="Escribe aquí..."
+      [(ngModel)]="texto"
+      (keyup.enter)="buscar()"
+    />
+
+    <button class="boton-buscar" (click)="buscar()">Buscar</button>
+
+  </div>
+
+</div>
+
+<div class="contenido-comidas">
+
+  <p *ngIf="cargando()" class="estado-mensaje">Cargando comidas...</p>
+
+  <p *ngIf="hayError()" class="estado-mensaje estado-error">
+    Ocurrió un error al conectar con la API. Intenta de nuevo.
+  </p>
+
+  <p *ngIf="!cargando() && !hayError() && comidas().length === 0" class="estado-mensaje">
+    No se encontraron comidas.
+  </p>
+
+  <div class="grid-comidas" *ngIf="!cargando() && !hayError() && comidas().length > 0">
+
+    <div class="tarjeta-comida" *ngFor="let i of comidas()">
+
+      <img
+        class="imagen-comida"
+        [src]="i.strMealThumb"
+        [alt]="i.strMeal"
+      />
+
+      <div class="info-comida">
+        <h3 class="nombre-comida">{{ i.strMeal }}</h3>
+
+        <p class="detalle-comida" *ngIf="i.strCategory">
+          Categoría: {{ i.strCategory }}
+        </p>
+
+        <p class="detalle-comida" *ngIf="i.strArea">
+          Origen: {{ i.strArea }}
+        </p>
+
+        <p class="precio-comida">
+          ${{ i.precio | number }}
+        </p>
+
+        <button class="boton-detalle" (click)="verDetalle(i)">
+          Ver detalle
+        </button>
+
+        <button class="boton-carrito" (click)="agregarAlCarrito(i)">
+          Agregar al carrito
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ventana de detalle del plato -->
+<div class="fondo-modal" *ngIf="platoSeleccionado() as plato" (click)="cerrarDetalle()">
+
+  <div class="caja-modal" (click)="$event.stopPropagation()">
+
+    <button class="boton-cerrar" (click)="cerrarDetalle()">✕</button>
+
+    <img
+      class="imagen-modal"
+      [src]="plato.strMealThumb"
+      [alt]="plato.strMeal"
+    />
+
+    <div class="info-modal">
+      <h2>{{ plato.strMeal }}</h2>
+
+      <p class="precio-modal">${{ plato.precio | number }}</p>
+
+      <p class="detalle-comida" *ngIf="plato.strCategory">
+        Categoría: {{ plato.strCategory }}
+      </p>
+
+      <p class="detalle-comida" *ngIf="plato.strArea">
+        Origen: {{ plato.strArea }}
+      </p>
+
+      <button class="boton-carrito" (click)="agregarAlCarrito(plato)">
+        Agregar al carrito
+      </button>
+
+      <h3>Ingredientes</h3>
+      <ul class="lista-ingredientes">
+        <li *ngFor="let ing of sacarIngredientes(plato)">{{ ing }}</li>
+      </ul>
+
+      <h3 *ngIf="plato.strInstructions">Preparación</h3>
+      <p class="instrucciones" *ngIf="plato.strInstructions">
+        {{ plato.strInstructions }}
+      </p>
+
+      <a
+        class="enlace-receta"
+        *ngIf="plato.strYoutube"
+        [href]="plato.strYoutube"
+        target="_blank"
+        rel="noopener"
+      >
+        Ver video de la receta
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- aviso de confirmación al agregar al carrito -->
+<div class="toast-carrito" [class.visible]="carritoConfirmado()">
+  ✓ Producto agregado al carrito
+</div>
+
+<!-- botón flotante para volver arriba -->
+<button
+  class="boton-subir"
+  [class.visible]="mostrarBotonSubir()"
+  (click)="subirArriba()"
+  aria-label="Volver arriba"
+>
+  ↑
+</button>

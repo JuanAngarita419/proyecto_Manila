@@ -1,0 +1,380 @@
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  background-color: var(--color-fondo);
+  padding: 36px 60px;
+  margin: 14px 0 18px;
+  border-left: 5px solid var(--color-acento-secundario);
+}
+
+.titulo-pagina {
+  color: var(--color-texto-claro);
+  font-family: var(--fuente-titulos);
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.barra-busqueda {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.filtro {
+  background-color: var(--color-superficie);
+  color: var(--color-texto-claro);
+  border: 1px solid var(--color-acento-secundario);
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 14px;
+}
+
+.campo-texto {
+  background-color: var(--color-superficie);
+  color: var(--color-texto-claro);
+  border: 1px solid var(--color-acento-secundario);
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 14px;
+  min-width: 250px;
+}
+
+.campo-texto::placeholder {
+  color: var(--color-texto-apagado);
+}
+
+.boton-buscar {
+  background-color: var(--color-acento-secundario);
+  color: var(--color-fondo);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 25px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.boton-buscar:hover {
+  filter: brightness(1.1);
+}
+
+@media (max-width: 700px) {
+
+  .encabezado {
+    flex-wrap: wrap;
+  }
+
+  .barra-busqueda {
+    flex-wrap: wrap;
+  }
+
+  .campo-texto {
+    flex: 1;
+    min-width: 150px;
+  }
+
+}
+
+.contenido-bebidas {
+  padding: 0 60px 40px;
+}
+
+.estado-mensaje {
+  color: var(--color-texto-apagado);
+  font-size: 16px;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.estado-error {
+  color: var(--color-acento-secundario);
+}
+
+.grid-bebidas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.tarjeta-bebida {
+  background-color: var(--color-fondo);
+  border: 1px solid var(--color-acento-secundario);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tarjeta-bebida:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.imagen-bebida {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.info-bebida {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.nombre-bebida {
+  color: var(--color-texto-claro);
+  font-family: var(--fuente-titulos);
+  font-size: 18px;
+  margin: 0 0 4px;
+}
+
+.detalle-bebida {
+  color: var(--color-texto-apagado);
+  font-size: 13px;
+  margin: 0;
+}
+
+.enlace-receta {
+  margin-top: 10px;
+  color: var(--color-acento-secundario);
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.enlace-receta:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 700px) {
+  .contenido-bebidas {
+    padding: 0 20px 30px;
+  }
+
+  .grid-bebidas {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+  }
+
+  .imagen-bebida {
+    height: 130px;
+  }
+}
+
+.precio-bebida {
+  color: var(--color-acento-secundario);
+  font-size: 17px;
+  font-weight: bold;
+  margin: 6px 0 0;
+}
+
+.boton-detalle {
+  margin-top: auto;
+  background-color: var(--color-superficie);
+  color: var(--color-texto-claro);
+  border: 1px solid var(--color-acento-secundario);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.boton-detalle:hover {
+  filter: brightness(1.2);
+}
+
+.boton-carrito {
+  margin-top: 8px;
+  background-color: var(--color-acento-secundario);
+  color: var(--color-fondo);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.12s ease;
+}
+
+.boton-carrito:hover {
+  filter: brightness(1.1);
+}
+
+/* feedback táctil inmediato al hacer clic */
+.boton-carrito:active {
+  transform: scale(0.93);
+  filter: brightness(0.95);
+}
+
+/* aviso flotante de confirmación */
+.toast-carrito {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: var(--color-acento-secundario);
+  color: var(--color-fondo);
+  padding: 14px 22px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2000;
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.toast-carrito.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* botón flotante para volver arriba */
+.boton-subir {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: var(--color-acento-secundario);
+  color: var(--color-fondo);
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  z-index: 1500;
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease, filter 0.15s ease;
+}
+
+.boton-subir.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.boton-subir:hover {
+  filter: brightness(1.1);
+}
+
+.boton-subir:active {
+  transform: scale(0.9);
+}
+
+/* fondo oscuro detrás del modal */
+.fondo-modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.caja-modal {
+  background-color: var(--color-fondo);
+  border: 1px solid var(--color-acento-secundario);
+  border-radius: 10px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.boton-cerrar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--color-superficie);
+  color: var(--color-texto-claro);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.imagen-modal {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.info-modal {
+  padding: 20px;
+  color: var(--color-texto-claro);
+}
+
+.info-modal h2 {
+  font-family: var(--fuente-titulos);
+  margin: 0 0 6px;
+}
+
+.info-modal h3 {
+  margin: 18px 0 8px;
+  font-size: 16px;
+}
+
+.precio-modal {
+  color: var(--color-acento-secundario);
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 10px;
+}
+
+.lista-ingredientes {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--color-texto-apagado);
+  font-size: 14px;
+}
+
+.lista-ingredientes li {
+  margin-bottom: 4px;
+}
+
+.instrucciones {
+  color: var(--color-texto-apagado);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  .caja-modal {
+    max-height: 90vh;
+  }
+
+  .imagen-modal {
+    height: 160px;
+  }
+}

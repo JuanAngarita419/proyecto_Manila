@@ -1,0 +1,38 @@
+<section class="carrusel">
+
+  <div class="carrusel__encabezado">
+    <h2>Sabores de Colombia</h2>
+    <p>Algunos platos típicos que también encontrarás en nuestra carta</p>
+  </div>
+
+  <div class="carrusel__envoltorio">
+
+    <button
+      type="button"
+      class="carrusel__flecha carrusel__flecha--izquierda"
+      (click)="irAnterior()"
+      aria-label="Ver plato anterior">
+      ‹
+    </button>
+
+    <div class="carrusel__pista" #pista>
+      <article class="carrusel__tarjeta" *ngFor="let plato of platos">
+        <img [src]="plato.imagenUrl" [alt]="plato.nombre">
+        <div class="carrusel__info">
+          <h3>{{ plato.nombre }}</h3>
+          <p>{{ plato.descripcion }}</p>
+        </div>
+      </article>
+    </div>
+
+    <button
+      type="button"
+      class="carrusel__flecha carrusel__flecha--derecha"
+      (click)="irSiguiente()"
+      aria-label="Ver siguiente plato">
+      ›
+    </button>
+
+  </div>
+
+</section>
