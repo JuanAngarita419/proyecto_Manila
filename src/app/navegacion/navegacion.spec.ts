@@ -21,4 +21,17 @@ describe('Navegacion', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render all navigation options', () => {
+    const links = fixture.nativeElement.querySelectorAll('.nav-link');
+
+    expect(links).toHaveLength(5);
+    expect(Array.from(links, (link: Element) => link.textContent?.trim())).toEqual([
+      'Inicio',
+      'Comida',
+      'Bebidas',
+      'Carrito',
+      'Juego',
+    ]);
+  });
 });

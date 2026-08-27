@@ -20,6 +20,13 @@
     width: 100%;
 }
 
+::ng-deep .navbar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    width: 100%;
+}
+
 ::ng-deep .navbar .nav-link {
     font-weight: 600;
     letter-spacing: 0.3px;
@@ -32,4 +39,19 @@
 
 ::ng-deep .navbar .nav-link.active {
     color: var(--color-acento-turquesa) !important;
+}
+
+@media (max-width: 575.98px) {
+    ::ng-deep .navbar.bg-dark {
+        padding: 12px 14px;
+    }
+
+    ::ng-deep .navbar-nav {
+        gap: 0;
+    }
+
+    ::ng-deep .navbar .nav-item {
+        flex: 1 1 33%;
+        text-align: center;
+    }
 }
