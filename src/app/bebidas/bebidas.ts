@@ -1,7 +1,7 @@
 import { Component, OnInit, signal, HostListener } from '@angular/core';
 import { Observable } from 'rxjs';
-import { servicioCarrito } from '../servicios/servicios-carrito';
-import { servicioBebida } from '../servicios/servicios-bebida';
+import { ServicioCarrito } from '../servicios/servicios-carrito';
+import { ServicioBebida } from '../servicios/servicios-bebida';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Bebidas as BebidaEntidad } from '../entidades/entidad-bebidas';
@@ -24,9 +24,12 @@ export class Bebidas implements OnInit {
   filtro = 'nombre';
   texto = '';
 
+  // categoría elegida en el segundo filtro: '' (todas), 'Ordinary_Drink' o 'Cocktail'
+  categoria = '';
+
   constructor(
-    private servicioBebida: servicioBebida,
-    public servicioCarrito: servicioCarrito
+    private bebidaApi: ServicioBebida,
+    public carrito: ServicioCarrito
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +43,10 @@ export class Bebidas implements OnInit {
   }
 
   subirArriba() {
+    // se manda a los 3 por si el scroll real no está pasando en "window"
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+    document.body.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // le pone un precio random a cada bebida, entre 10.000 y 45.000
@@ -53,7 +59,7 @@ export class Bebidas implements OnInit {
 
   // trae todas las bebidas (letra por letra) al entrar a la página
   buscarTodo() {
-    this.cargarResultados(this.servicioBebida.traerTodasLasBebidas());
+    this.cargarResultados(this.bebidaApi.listarTodas());
   }
 
   // decide qué buscar según el filtro que el usuario eligió
@@ -79,14 +85,26 @@ export class Bebidas implements OnInit {
 
     const peticion =
       this.filtro === 'ingrediente'
-        ? this.servicioBebida.buscarPorIngrediente(texto)
-        : this.servicioBebida.buscarPorNombre(texto);
+        ? this.bebidaApi.buscarPorIngrediente(texto)
+        : this.bebidaApi.buscarPorNombre(texto);
 
     this.cargarResultados(peticion);
   }
 
   buscarPorTipo(tipo: string) {
-    this.cargarResultados(this.servicioBebida.buscarPorTipo(tipo));
+    this.cargarResultados(this.bebidaApi.buscarPorTipo(tipo));
+  }
+
+  // filtra por categoría (bebida ordinaria o cóctel), conectado directo a la API
+  filtrarPorCategoria(categoria: string) {
+    this.categoria = categoria;
+
+    if (!categoria) {
+      this.buscarTodo();
+      return;
+    }
+
+    this.cargarResultados(this.bebidaApi.buscarPorCategoria(categoria));
   }
 
   private cargarResultados(peticion: Observable<any>): void {
@@ -131,7 +149,7 @@ export class Bebidas implements OnInit {
 
     // si viene de un filtro (tipo o ingrediente) solo trae id, nombre e imagen,
     // entonces buscamos el detalle completo con el id
-    this.servicioBebida.buscarDetallePorId(bebida.idDrink).subscribe({
+    this.bebidaApi.detallePorId(bebida.idDrink).subscribe({
       next: (dato: any) => {
         const completa: BebidaEntidad = dato.drinks ? dato.drinks[0] : bebida;
         completa.precio = bebida.precio; // mantenemos el mismo precio random
@@ -149,7 +167,7 @@ export class Bebidas implements OnInit {
 
   // manda la bebida al carrito de compras
   agregarAlCarrito(bebida: BebidaEntidad) {
-    this.servicioCarrito.agregarProducto({
+    this.carrito.agregar({
       id: bebida.idDrink,
       nombre: bebida.strDrink,
       precio: bebida.precio,

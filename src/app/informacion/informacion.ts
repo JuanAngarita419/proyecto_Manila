@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { serviciosComida } from '../servicios/servicios-comida';
-import { servicioBebida } from '../servicios/servicios-bebida';
+import { ServicioComida } from '../servicios/servicios-comida';
+import { ServicioBebida } from '../servicios/servicios-bebida';
 
 @Component({
   selector: 'app-informacion',
@@ -14,8 +14,8 @@ export class Informacion implements OnInit {
   bebidaPopular = signal<any>(null);
 
   constructor(
-    private serviciosComida: serviciosComida,
-    private servicioBebida: servicioBebida
+    private comidaApi: ServicioComida,
+    private bebidaApi: ServicioBebida
   ) {}
 
   ngOnInit(): void {
@@ -24,7 +24,7 @@ export class Informacion implements OnInit {
   }
 
   traerComidaPopular() {
-    this.serviciosComida.traerComidaAleatoria().subscribe({
+    this.comidaApi.aleatoria().subscribe({
       next: (dato: any) => {
         const plato = dato.meals ? dato.meals[0] : null;
         this.comidaPopular.set(plato);
@@ -36,7 +36,7 @@ export class Informacion implements OnInit {
   }
 
   traerBebidaPopular() {
-    this.servicioBebida.traerBebidaAleatoria().subscribe({
+    this.bebidaApi.aleatoria().subscribe({
       next: (dato: any) => {
         const bebida = dato.drinks ? dato.drinks[0] : null;
         this.bebidaPopular.set(bebida);

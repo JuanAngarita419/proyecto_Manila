@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { servicioCarrito } from '../servicios/servicios-carrito';
+import { ServicioCarrito } from '../servicios/servicios-carrito';
 import { Carrito as ItemCarrito } from '../entidades/entidad-carrito';
 import { DatosCliente } from '../entidades/entidad-datos-cliente';
 import jsPDF from 'jspdf';
@@ -22,26 +22,26 @@ export class Carrito {
 
   mensajeError = signal('');
 
-  constructor(public servicioCarrito: servicioCarrito) {}
+  constructor(public carrito: ServicioCarrito) {}
 
   aumentar(item: ItemCarrito) {
-    this.servicioCarrito.cambiarCantidad(item.id, item.cantidad + 1);
+    this.carrito.cambiar(item.id, item.cantidad + 1);
   }
 
   disminuir(item: ItemCarrito) {
     if (item.cantidad > 1) {
-      this.servicioCarrito.cambiarCantidad(item.id, item.cantidad - 1);
+      this.carrito.cambiar(item.id, item.cantidad - 1);
     }
   }
 
   eliminar(item: ItemCarrito) {
-    this.servicioCarrito.quitarProducto(item.id);
+    this.carrito.eliminar(item.id);
   }
 
   realizarPedido() {
     this.mensajeError.set('');
 
-    if (this.servicioCarrito.productos().length === 0) {
+    if (this.carrito.productos().length === 0) {
       this.mensajeError.set('Tu carrito está vacío.');
       return;
     }
@@ -61,8 +61,8 @@ export class Carrito {
   // arma el pdf del pedido y lo descarga
   generarPdf() {
     const doc = new jsPDF();
-    const productos = this.servicioCarrito.productos();
-    const total = this.servicioCarrito.total();
+    const productos = this.carrito.productos();
+    const total = this.carrito.total();
 
     // --- logo dibujado a mano (insignia con tazón y palillos, igual al de la página) ---
     doc.setFillColor(230, 57, 70);
@@ -140,7 +140,7 @@ export class Carrito {
     doc.save(`pedido-manila-${Date.now()}.pdf`);
 
     // una vez descargado el pedido, se limpia el carrito y el formulario
-    this.servicioCarrito.vaciarCarrito();
+    this.carrito.vaciar();
     this.datosCliente = { nombre: '', celular: '', direccion: '' };
   }
 }

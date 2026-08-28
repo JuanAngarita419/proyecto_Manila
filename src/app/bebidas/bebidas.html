@@ -4,6 +4,16 @@
   <div class="barra-busqueda">
     <select
       class="filtro"
+      [value]="categoria"
+      (change)="filtrarPorCategoria($any($event.target).value)"
+    >
+      <option value="">Filtrar por categoría</option>
+      <option value="Ordinary_Drink">Bebida ordinaria</option>
+      <option value="Cocktail">Cóctel</option>
+    </select>
+
+    <select
+      class="filtro"
       [value]="filtro"
       (change)="filtro = $any($event.target).value"
     >
@@ -74,6 +84,11 @@
 
     </div>
 
+  </div>
+
+  <!-- botón simple para volver arriba -->
+  <div class="volver-arriba">
+    <button class="boton-volver" (click)="subirArriba()">Volver</button>
   </div>
 
 </div>

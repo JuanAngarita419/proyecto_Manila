@@ -5,7 +5,7 @@ import { Observable, forkJoin, map } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class servicioBebida {
+export class ServicioBebida {
   private urlBase = 'https://www.thecocktaildb.com/api/json/v1/1/';
 
   constructor(private http: HttpClient) {}
@@ -26,19 +26,32 @@ export class servicioBebida {
     return this.http.get(`${this.urlBase}filter.php?a=${tipo}`);
   }
 
+  // filtra por categoría, ej: "Ordinary_Drink" (bebida ordinaria) o "Cocktail" (cóctel)
+  buscarPorCategoria(categoria: string): Observable<any> {
+    return this.http.get(`${this.urlBase}filter.php?c=${categoria}`);
+  }
+
   // trae 1 bebida al azar (para mostrar en el inicio como "Bebida Popular")
-  traerBebidaAleatoria(): Observable<any> {
+  aleatoria(): Observable<any> {
     return this.http.get(`${this.urlBase}random.php`);
   }
 
+  traerBebidaAleatoria(): Observable<any> {
+    return this.aleatoria();
+  }
+
   // busca el detalle completo de una bebida por su id
-  buscarDetallePorId(id: string): Observable<any> {
+  detallePorId(id: string): Observable<any> {
     return this.http.get(`${this.urlBase}lookup.php?i=${id}`);
+  }
+
+  buscarDetallePorId(id: string): Observable<any> {
+    return this.detallePorId(id);
   }
 
   // con la key gratis no se puede pedir "todas las bebidas" de una vez,
   // entonces pedimos letra por letra (a, b, c...) y las juntamos en una sola lista
-  traerTodasLasBebidas(): Observable<any> {
+  listarTodas(): Observable<any> {
     const letras = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
     const peticiones = letras.map((letra) =>
@@ -60,3 +73,5 @@ export class servicioBebida {
     );
   }
 }
+
+export { ServicioBebida as servicioBebida };

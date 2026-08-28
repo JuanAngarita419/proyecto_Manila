@@ -35,7 +35,53 @@
     No se encontraron comidas.
   </p>
 
-  <div class="grid-comidas" *ngIf="!cargando() && !hayError() && comidas().length > 0">
+  <!-- vista inicial: agrupada por categoría -->
+  <div *ngIf="!cargando() && !hayError() && mostrandoCategorias()">
+
+    <div class="grupo-categoria" *ngFor="let grupo of categorias()">
+
+      <h2 class="titulo-categoria">{{ traducirCategoria(grupo.nombre) }}</h2>
+
+      <div class="grid-comidas">
+
+        <div class="tarjeta-comida" *ngFor="let i of grupo.platos">
+
+          <img
+            class="imagen-comida"
+            [src]="i.strMealThumb"
+            [alt]="i.strMeal"
+          />
+
+          <div class="info-comida">
+            <h3 class="nombre-comida">{{ i.strMeal }}</h3>
+
+            <p class="detalle-comida" *ngIf="i.strArea">
+              Origen: {{ i.strArea }}
+            </p>
+
+            <p class="precio-comida">
+              ${{ i.precio | number }}
+            </p>
+
+            <button class="boton-detalle" (click)="verDetalle(i)">
+              Ver detalle
+            </button>
+
+            <button class="boton-carrito" (click)="agregarAlCarrito(i)">
+              Agregar al carrito
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- vista de búsqueda: lista normal, sin agrupar -->
+  <div class="grid-comidas" *ngIf="!cargando() && !hayError() && !mostrandoCategorias() && comidas().length > 0">
 
     <div class="tarjeta-comida" *ngFor="let i of comidas()">
 
@@ -49,7 +95,7 @@
         <h3 class="nombre-comida">{{ i.strMeal }}</h3>
 
         <p class="detalle-comida" *ngIf="i.strCategory">
-          Categoría: {{ i.strCategory }}
+          Categoría: {{ traducirCategoria(i.strCategory) }}
         </p>
 
         <p class="detalle-comida" *ngIf="i.strArea">
@@ -73,6 +119,11 @@
 
   </div>
 
+  <!-- botón simple para volver arriba -->
+  <div class="volver-arriba">
+    <button class="boton-volver" (click)="subirArriba()">Volver</button>
+  </div>
+
 </div>
 
 <!-- ventana de detalle del plato -->
@@ -94,7 +145,7 @@
       <p class="precio-modal">${{ plato.precio | number }}</p>
 
       <p class="detalle-comida" *ngIf="plato.strCategory">
-        Categoría: {{ plato.strCategory }}
+        Categoría: {{ traducirCategoria(plato.strCategory) }}
       </p>
 
       <p class="detalle-comida" *ngIf="plato.strArea">

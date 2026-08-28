@@ -5,14 +5,18 @@ import { Observable, forkJoin, map } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class serviciosComida {
+export class ServicioComida {
   private urlBase = 'https://www.themealdb.com/api/json/v1/1/';
 
   constructor(private http: HttpClient) {}
 
   // busca por nombre (o texto que escriba el usuario)
-  recibirDatosC(nombre: string = ''): Observable<any> {
+  buscarPorNombre(nombre: string = ''): Observable<any> {
     return this.http.get(`${this.urlBase}search.php?s=${nombre}`);
+  }
+
+  recibirDatosC(nombre: string = ''): Observable<any> {
+    return this.buscarPorNombre(nombre);
   }
 
   // filtra por ingrediente
@@ -21,13 +25,17 @@ export class serviciosComida {
   }
 
   // trae 1 comida al azar (para mostrar en el inicio como "Comida Popular")
-  traerComidaAleatoria(): Observable<any> {
+  aleatoria(): Observable<any> {
     return this.http.get(`${this.urlBase}random.php`);
+  }
+
+  traerComidaAleatoria(): Observable<any> {
+    return this.aleatoria();
   }
 
   // con la key gratis no se puede pedir "todo" de una sola vez,
   // entonces pedimos las comidas letra por letra (a, b, c...) y las juntamos
-  traerTodasLasComidas(): Observable<any> {
+  listarTodas(): Observable<any> {
     const letras = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
     const peticiones = letras.map((letra) =>
@@ -49,3 +57,5 @@ export class serviciosComida {
     );
   }
 }
+
+export { ServicioComida as serviciosComida };

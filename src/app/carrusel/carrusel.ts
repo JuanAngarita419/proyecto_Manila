@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { serviciosComida } from '../servicios/servicios-comida';
+import { ServicioComida } from '../servicios/servicios-comida';
 
 interface PlatoTipico {
   nombre: string;
@@ -44,7 +44,7 @@ export class Carrusel implements OnInit, OnDestroy {
     }
   ];
 
-  constructor(private serviciosComida: serviciosComida) {}
+  constructor(private comidaApi: ServicioComida) {}
 
   ngOnInit(): void {
     this.traerImagenesReales();
@@ -61,7 +61,7 @@ export class Carrusel implements OnInit, OnDestroy {
   // busca en la API la imagen real de cada plato típico, por su nombre
   traerImagenesReales() {
     this.platos.forEach((plato) => {
-      this.serviciosComida.recibirDatosC(plato.nombre).subscribe({
+      this.comidaApi.buscarPorNombre(plato.nombre).subscribe({
         next: (dato: any) => {
           if (dato.meals && dato.meals[0]) {
             plato.imagenUrl = dato.meals[0].strMealThumb;

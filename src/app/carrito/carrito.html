@@ -4,15 +4,15 @@
 
 <div class="contenido-carrito">
 
-  <p *ngIf="servicioCarrito.productos().length === 0" class="estado-mensaje">
+  <p *ngIf="carrito.productos().length === 0" class="estado-mensaje">
     Tu carrito está vacío. Agrega platos o bebidas desde sus secciones.
   </p>
 
-  <div class="envoltorio-carrito" *ngIf="servicioCarrito.productos().length > 0">
+  <div class="envoltorio-carrito" *ngIf="carrito.productos().length > 0">
 
   <div class="lista-carrito">
 
-    <div class="item-carrito" *ngFor="let item of servicioCarrito.productos()">
+    <div class="item-carrito" *ngFor="let item of carrito.productos()">
 
       <img class="imagen-item" [src]="item.imagen" [alt]="item.nombre" />
 
@@ -38,7 +38,7 @@
 
   <div class="resumen-carrito">
 
-    <p class="total-carrito">Total: ${{ servicioCarrito.total() | number }}</p>
+    <p class="total-carrito">Total: ${{ carrito.total() | number }}</p>
 
     <h3 class="subtitulo-form">Datos para el pedido</h3>
 

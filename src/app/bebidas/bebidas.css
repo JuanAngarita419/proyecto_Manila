@@ -82,7 +82,8 @@
 }
 
 .contenido-bebidas {
-  padding: 0 60px 40px;
+  padding: 30px 60px 40px;
+  background-color: var(--color-fondo);
 }
 
 .estado-mensaje {
@@ -157,6 +158,33 @@
   text-decoration: underline;
 }
 
+.volver-arriba {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.boton-volver {
+  background-color: var(--color-superficie);
+  color: var(--color-texto-claro);
+  border: 2px solid var(--color-acento-secundario);
+  border-radius: 10px;
+  padding: 14px 40px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: filter 0.15s ease, transform 0.12s ease;
+}
+
+.boton-volver:hover {
+  filter: brightness(1.2);
+}
+
+.boton-volver:active {
+  transform: scale(0.96);
+}
+
 @media (max-width: 700px) {
   .contenido-bebidas {
     padding: 0 20px 30px;
@@ -197,7 +225,7 @@
 }
 
 .boton-carrito {
-  margin-top: 8px;
+  margin-top: 6px;
   background-color: var(--color-acento-secundario);
   color: var(--color-fondo);
   border: none;
@@ -206,7 +234,7 @@
   font-size: 13px;
   font-weight: bold;
   cursor: pointer;
-  transition: filter 0.15s ease, transform 0.12s ease;
+  transition: filter 0.15s ease;
 }
 
 .boton-carrito:hover {

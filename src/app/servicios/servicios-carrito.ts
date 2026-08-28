@@ -4,7 +4,7 @@ import { Carrito } from '../entidades/entidad-carrito';
 @Injectable({
   providedIn: 'root',
 })
-export class servicioCarrito {
+export class ServicioCarrito {
   // signal con todos los productos que el cliente ha agregado
   productos = signal<Carrito[]>([]);
 
@@ -14,28 +14,28 @@ export class servicioCarrito {
   );
 
   // agrega un producto nuevo, o si ya estaba, le suma 1 a la cantidad
-  agregarProducto(nuevo: Carrito) {
+  agregar(nuevo: Carrito) {
     const lista = this.productos();
     const yaExiste = lista.find((p) => p.id === nuevo.id);
 
     if (yaExiste) {
-      this.cambiarCantidad(nuevo.id, yaExiste.cantidad + 1);
+      this.cambiar(nuevo.id, yaExiste.cantidad + 1);
     } else {
       this.productos.set([...lista, nuevo]);
     }
   }
 
-  cambiarCantidad(id: string, cantidad: number) {
+  cambiar(id: string, cantidad: number) {
     this.productos.set(
       this.productos().map((p) => (p.id === id ? { ...p, cantidad } : p))
     );
   }
 
-  quitarProducto(id: string) {
+  eliminar(id: string) {
     this.productos.set(this.productos().filter((p) => p.id !== id));
   }
 
-  vaciarCarrito() {
+  vaciar() {
     this.productos.set([]);
   }
 }
