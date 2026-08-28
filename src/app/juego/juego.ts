@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { servicioBebida } from '../servicios/servicios-bebida';
-import { serviciosComida } from '../servicios/servicios-comida';
+import { ServicioBebida } from '../servicios/servicios-bebida';
+import { ServicioComida } from '../servicios/servicios-comida';
 
 @Component({
   selector: 'app-juego',
@@ -16,11 +16,12 @@ export class Juego implements OnInit {
   contadorAciertos: number = 0;
   imagenPlato: string = "";
   imagenBebida: string = "";
+src: any;
 
   constructor(
     private detector: ChangeDetectorRef,
-    private serviciosComida: serviciosComida,
-    private servicioBebida: servicioBebida
+    private comidaApi: ServicioComida,
+    private bebidaApi: ServicioBebida
   ) {}
 
   ngOnInit(): void {
@@ -30,11 +31,11 @@ export class Juego implements OnInit {
       this.posicion2 = Math.floor(Math.random() * 16) + 1;
     }
 
-    this.serviciosComida.traerComidaAleatoria().subscribe((respuesta) => {
+    this.comidaApi.aleatoria().subscribe((respuesta) => {
       this.imagenPlato = respuesta.meals?.[0]?.strMealThumb ?? "";
       this.actualizarImagenRevelada(this.posicion, this.imagenPlato);
     });
-    this.servicioBebida.traerBebidaAleatoria().subscribe((respuesta) => {
+    this.bebidaApi.aleatoria().subscribe((respuesta) => {
       this.imagenBebida = respuesta.drinks?.[0]?.strDrinkThumb ?? "";
       this.actualizarImagenRevelada(this.posicion2, this.imagenBebida);
     });
@@ -50,29 +51,12 @@ export class Juego implements OnInit {
   reiniciar() {
     this.casillas.forEach(i => {
       const img = document.getElementById("img" + i) as HTMLImageElement;
-      const boton = document.getElementById("tablero" + i) as HTMLButtonElement;
-      
       if (img) {
-        // Limpiar completamente la imagen
         img.style.display = "none";
-        img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Crect fill='%23ffffff' width='1' height='1'/%3E%3C/svg%3E";
-        img.style.backgroundColor = "transparent";
-        img.alt = "";
-        
-        // Limpiar event listeners
-        img.onerror = null;
-        img.onload = null;
+        img.src = "";
       }
-      
-      if (boton) {
-        // Restaurar el botón a su estado inicial
-        const signo = boton.querySelector('.signo-pregunta') as HTMLElement;
-        if (signo) {
-          signo.style.display = "inline";
-        }
-      }
+      document.getElementById("tablero" + i)?.classList.remove("tarjeta-blanca");
     });
-    
     this.contadorAciertos = 0;
     this.letrero = "";
     this.imagenPlato = "";
@@ -83,58 +67,17 @@ export class Juego implements OnInit {
 
   descubrirO(p: number) {
     const img = document.getElementById("img" + p) as HTMLImageElement;
-    
     if (!img || img.style.display === "block" || this.contadorAciertos === 2) return;
 
     if (p === this.posicion || p === this.posicion2) {
       const imagenURL = p === this.posicion ? this.imagenPlato : this.imagenBebida;
       if (imagenURL) {
-        img.style.display = "block";
-        img.style.backgroundColor = "#ffffff";
         img.src = imagenURL;
-        
-        // Manejo de error: si la imagen no carga, mostrar solo fondo blanco
-        const timeoutId = setTimeout(() => {
-          if (img.style.display === "block") {
-            img.style.backgroundColor = "#ffffff";
-            img.alt = "";
-          }
-        }, 2000);
-        
-        img.onerror = () => {
-          clearTimeout(timeoutId);
-          img.style.backgroundColor = "#ffffff";
-          img.style.display = "block";
-          img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Crect fill='%23ffffff' width='1' height='1'/%3E%3C/svg%3E";
-          img.alt = "";
-        };
-        
-        img.onload = () => {
-          clearTimeout(timeoutId);
-          img.style.backgroundColor = "transparent";
-        };
-        
+        img.style.display = "block";
         this.contadorAciertos++;
       }
     } else {
-      img.style.display = "block";
-      img.style.backgroundColor = "#ffffff";
-      img.src = "/img/blanco.jpg";
-      
-      const timeoutId = setTimeout(() => {
-        img.style.backgroundColor = "#ffffff";
-      }, 2000);
-      
-      img.onerror = () => {
-        clearTimeout(timeoutId);
-        img.style.backgroundColor = "#ffffff";
-        img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Crect fill='%23ffffff' width='1' height='1'/%3E%3C/svg%3E";
-        img.alt = "";
-      };
-      
-      img.onload = () => {
-        clearTimeout(timeoutId);
-      };
+      document.getElementById("tablero" + p)?.classList.add("tarjeta-blanca");
     }
 
     if (this.contadorAciertos === 2) {
